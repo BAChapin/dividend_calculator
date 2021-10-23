@@ -8,6 +8,47 @@
 #    - Stock Input (This will collect data on the stocks)
 #    - Would you like to add another stock? : Bool 
 # *****************************************************************************
+from InvestmentCalculator import InvestmentData
+from DataConverter import DataConverter
+from Stock import Stock
+
 
 class DataCollector:
-    pass
+    
+    @staticmethod
+    def run() -> tuple[InvestmentData, list[Stock]]:
+        numOfPaychecks = int(input("How many paychecks do you receive a "\
+                                   "year? "))
+        yearsCalculated = int(input("How many years would you like "\
+                                    "calculated? "))
+        quarterlyPrint = DataConverter.bool_input("Would you like quarterly "\
+                                                  "print outs? ")
+        yearlyPrint = False
+        
+        if not quarterlyPrint:
+            yearlyPrint = DataConverter.bool_input("Would you like yearly "\
+                                                   "print outs? ")
+
+        stock = DataCollector.__collect_stock()
+        investmentData = InvestmentData(numOfPaychecks,
+                                        yearsCalculated,
+                                        quarterlyPrint,
+                                        yearlyPrint)
+
+        return investmentData, stock
+
+        
+    def __collect_stock() -> list[Stock]:
+        """A private method to collect the stocks the user wants to run
+        calculations on"""
+
+        continueLoop = True
+        stocks = []
+
+        while continueLoop:
+            stocks.append(Stock.collect_input())
+
+            continueLoop = DataConverter.bool_input("Would you like to add "\
+                                                    "another stock? ")
+        else:
+            return stocks
