@@ -16,7 +16,7 @@ from Stock import Stock
 class DataCollector:
     
     @staticmethod
-    def run() -> tuple[InvestmentData, list[Stock]]:
+    def run() -> InvestmentData:
         numOfPaychecks = int(input("How many paychecks do you receive a "\
                                    "year? "))
         yearsCalculated = int(input("How many years would you like "\
@@ -29,13 +29,14 @@ class DataCollector:
             yearlyPrint = DataConverter.bool_input("Would you like yearly "\
                                                    "print outs? ")
 
-        stock = DataCollector.__collect_stock()
+        stocks = DataCollector.__collect_stock()
         investmentData = InvestmentData(numOfPaychecks,
                                         yearsCalculated,
                                         quarterlyPrint,
-                                        yearlyPrint)
+                                        yearlyPrint,
+                                        stocks)
 
-        return investmentData, stock
+        return investmentData
 
         
     def __collect_stock() -> list[Stock]:
